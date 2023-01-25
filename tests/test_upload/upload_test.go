@@ -1,4 +1,4 @@
-package test_auth
+package test_upload
 
 import (
 	"bytes"
