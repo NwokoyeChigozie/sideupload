@@ -19,7 +19,7 @@ func TestGetPing(t *testing.T) {
 	logger := tst.Setup()
 	gin.SetMode(gin.TestMode)
 	validatorRef := validator.New()
-	requestURI := url.URL{Path: "/v2/upload/health"}
+	requestURI := url.URL{Path: "/v2/health"}
 
 	tests := []struct {
 		Name         string
@@ -40,7 +40,7 @@ func TestGetPing(t *testing.T) {
 	for _, test := range tests {
 		r := gin.Default()
 
-		r.GET("/v2/upload/health", auth.Get)
+		r.GET("/v2/health", auth.Get)
 
 		t.Run(test.Name, func(t *testing.T) {
 			var b bytes.Buffer
@@ -83,7 +83,7 @@ func TestPostPing(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	// getConfig := config.GetConfig()
 	validatorRef := validator.New()
-	requestURI := url.URL{Path: "/v2/upload/health"}
+	requestURI := url.URL{Path: "/v2/health"}
 
 	tests := []struct {
 		Name         string
@@ -104,7 +104,7 @@ func TestPostPing(t *testing.T) {
 	for _, test := range tests {
 		r := gin.Default()
 
-		r.POST("/v2/upload/health", auth.Get)
+		r.POST("/v2/health", auth.Get)
 
 		t.Run(test.Name, func(t *testing.T) {
 			var b bytes.Buffer

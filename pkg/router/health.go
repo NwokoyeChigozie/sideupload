@@ -12,7 +12,7 @@ import (
 func Health(r *gin.Engine, ApiVersion string, validator *validator.Validate, logger *utility.Logger) *gin.Engine {
 	health := health.Controller{Validator: validator, Logger: logger}
 
-	healthUrl := r.Group(fmt.Sprintf("%v/upload", ApiVersion))
+	healthUrl := r.Group(fmt.Sprintf("%v", ApiVersion))
 	{
 		healthUrl.POST("/health", health.Post)
 		healthUrl.GET("/health", health.Get)

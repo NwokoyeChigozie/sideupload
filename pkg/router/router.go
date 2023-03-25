@@ -30,6 +30,14 @@ func Setup(logger *utility.Logger, validator *validator.Validate) *gin.Engine {
 	Health(r, ApiVersion, validator, logger)
 	Upload(r, ApiVersion, validator, logger)
 
+	r.GET("/", func(c *gin.Context) {
+  		c.JSON(http.StatusOK, gin.H{
+  			"code":    200,
+  			"message": "Welcome to upload micro-service",
+  			"status":  http.StatusOK,
+  		})
+  	})
+
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
 			"name":    "Not Found",
