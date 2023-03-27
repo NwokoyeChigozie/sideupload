@@ -63,7 +63,7 @@ func TestUploadFiles(t *testing.T) {
 			var payload bytes.Buffer
 			writer := multipart.NewWriter(&payload)
 			// json.NewEncoder(&b).Encode(test.RequestBody)
-			URI := url.URL{Path: "/v2/upload/files"}
+			URI := url.URL{Path: "/v2/files"}
 			if test.RequestBody {
 				file, errFile1 := os.Open("./test_image.png")
 				if errFile1 != nil {
