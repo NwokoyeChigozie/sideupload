@@ -52,7 +52,7 @@ func TestUploadFiles(t *testing.T) {
 		},
 	}
 
-	uploadUrl := r.Group(fmt.Sprintf("%v/upload", "v2"))
+	uploadUrl := r.Group(fmt.Sprintf("%v", "v2"))
 	{
 		uploadUrl.POST("/files", upload.UploadFiles)
 
