@@ -11,13 +11,17 @@ import (
 	"github.com/vesicash/upload-ms/utility"
 )
 
-func Setup(logger *utility.Logger, validator *validator.Validate) *gin.Engine {
+func Setup(logger *utility.Logger, validator *validator.Validate, appConfiguration *config.App) *gin.Engine {
+	if appConfiguration.Mode == "release" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	r := gin.New()
 
 	// Middlewares
 	// r.Use(gin.Logger())
 	r.ForwardedByClientIP = true
 	r.SetTrustedProxies(config.GetConfig().Server.TrustedProxies)
+	r.Use(middleware.PrometheusMiddleware())
 	r.Use(middleware.Security())
 	r.Use(middleware.Throttle())
 	r.Use(middleware.Logger())
@@ -31,12 +35,12 @@ func Setup(logger *utility.Logger, validator *validator.Validate) *gin.Engine {
 	Upload(r, ApiVersion, validator, logger)
 
 	r.GET("/", func(c *gin.Context) {
-  		c.JSON(http.StatusOK, gin.H{
-  			"code":    200,
-  			"message": "Welcome to upload micro-service",
-  			"status":  http.StatusOK,
-  		})
-  	})
+		c.JSON(http.StatusOK, gin.H{
+			"code":    200,
+			"message": "Welcome to upload micro-service",
+			"status":  http.StatusOK,
+		})
+	})
 
 	r.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{
