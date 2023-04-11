@@ -27,7 +27,7 @@ func ConnectAws(logger *utility.Logger) *session.Session {
 			),
 		})
 	if err != nil {
-		logger.Info("creating s3 session", err)
+		logger.Error("creating s3 session", err)
 		panic(err)
 	}
 	logger.Info("created s3 session")
