@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gofrs/uuid"
+	"github.com/vesicash/upload-ms/internal/config"
 	"github.com/vesicash/upload-ms/internal/models"
 	"github.com/vesicash/upload-ms/pkg/repository/storage/awss3"
 	"github.com/vesicash/upload-ms/utility"
@@ -80,7 +81,7 @@ func UploadFilesService(c *gin.Context, logger *utility.Logger) ([]models.Multip
 			folder = "documents"
 		}
 
-		renamed := fmt.Sprintf("%v/%v%v%v", folder, shaFileName, id.String(), extension)
+		renamed := fmt.Sprintf("%v/%v/%v%v%v", config.GetConfig().App.Name, folder, shaFileName, id.String(), extension)
 		url, err := awss3.UploadToS3(renamed, file)
 		if err != nil {
 			return resp, http.StatusInternalServerError, err
