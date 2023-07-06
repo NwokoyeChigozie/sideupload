@@ -81,7 +81,12 @@ func UploadFilesService(c *gin.Context, logger *utility.Logger) ([]models.Multip
 			folder = "documents"
 		}
 
-		renamed := fmt.Sprintf("%v/%v/%v%v%v", config.GetConfig().App.Name, folder, shaFileName, id.String(), extension)
+		appName := config.GetConfig().App.Name
+		if appName == "" {
+			appName = "limbo"
+		}
+
+		renamed := fmt.Sprintf("%v/%v/%v%v%v", appName, folder, shaFileName, id.String(), extension)
 		url, err := awss3.UploadToS3(renamed, file)
 		if err != nil {
 			return resp, http.StatusInternalServerError, err
